@@ -1149,8 +1149,8 @@ function AlternateCard({ alt, color }) {
           </div>
         );
       })()}
-      </div>{/* end app-main */}
-      </div>{/* end app-shell */}
+      </div>
+      </div>
     </div>
   );
 }
@@ -4457,7 +4457,7 @@ function LevelUpModal({ levelUpModal, setLevelUpModal, setPokedex }) {
 
 export default function App() {
   const [tab, setTab] = useState("data");
-  const [appName, setAppName]         = usePersistedState("vs_appName", "VALLE STRONG 🏔️");
+  const [appName, setAppName]         = usePersistedState("vs_appName", "PokExcercise - ADHD Edition 🏔️");
   const [xp,      setXp]              = usePersistedState("vs_xp", 0);
   const [levelUpModal, setLevelUpModal] = useState(null); // { level }
   const [pokedex, setPokedex] = usePersistedState("vs_pokedex", {}); // {name: {caught:true, shiny:bool}}
@@ -4673,7 +4673,7 @@ export default function App() {
           <div style={{ color:"#e8ff4a", fontWeight:900, fontSize:24, letterSpacing:-1 }}>{appName}</div>
           <LiveClock/>
         </div>
-        <div style={{ color:"#888", fontSize:12, marginTop:2 }}>Tu programa personal · Valle de Ángeles</div>
+        <div style={{ color:"#888", fontSize:12, marginTop:2 }}>ADHD Friendly Excercise Program · Pokemón Themed</div>
         <div style={{ display:"flex", gap:6, marginTop:8, flexWrap:"wrap" }}>
           <Tag color="#ff6b35">3-5 días/semana</Tag>
           <Tag color="#4aff8c">35-45 min/sesión</Tag>
