@@ -4457,6 +4457,39 @@ function LevelUpModal({ levelUpModal, setLevelUpModal, setPokedex }) {
 
 export default function App() {
   const [tab, setTab] = useState("data");
+
+  // Inject responsive CSS
+  useEffect(() => {
+    const id = "app-responsive-css";
+    if(document.getElementById(id)) return;
+    const el = document.createElement("style");
+    el.id = id;
+    el.textContent = [
+      ".app-shell { max-width: 560px; margin: 0 auto; }",
+      "::-webkit-scrollbar { width: 0; height: 0; }",
+      "* { scrollbar-width: none; }",
+      ".sidebar-xp { display: none; }",
+      "@media (min-width: 900px) {",
+      "  .app-shell { max-width: 100%; display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }",
+      "  .app-sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; border-right: 1px solid #2a2a2a; background: linear-gradient(135deg,#111 0%,#1a1a0a 100%); }",
+      "  .app-main { overflow-y: auto; }",
+      "  .tab-bar { flex-direction: column !important; overflow-x: visible !important; border-bottom: none !important; padding: 8px 0 !important; }",
+      "  .tab-bar button { text-align: left !important; padding: 10px 16px !important; border-bottom: none !important; border-left: 2px solid transparent; width: 100% !important; }",
+      "  .tab-bar button.active-tab { border-left: 2px solid #e8ff4a !important; border-bottom: none !important; }",
+      "  .content-area { padding: 24px 32px 40px; max-width: 720px; }",
+      "  .xp-bar-wrap { display: none !important; }",
+      "  .sidebar-xp { display: block !important; }",
+      "  .hide-on-desktop { display: none !important; }",
+      "  .app-sidebar-inner { display: block !important; }",
+      "}",
+      "@media (max-width: 899px) {",
+      "  .app-sidebar { display: none !important; }",
+      "  .app-main { display: block !important; }",
+      "}",
+    ].join("
+");
+    document.head.appendChild(el);
+  }, []);
   const [appName, setAppName]         = usePersistedState("vs_appName", "PokExcercise - ADHD Edition 🏔️");
   const [xp,      setXp]              = usePersistedState("vs_xp", 0);
   const [levelUpModal, setLevelUpModal] = useState(null); // { level }
@@ -4642,31 +4675,6 @@ export default function App() {
   return (
     <div style={{ background:"#0f0f0f", minHeight:"100vh", fontFamily:"'Segoe UI',Arial,sans-serif", color:"#f0f0f0" }}>
       <div className="app-shell">
-      {/* Responsive wrapper */}
-      <style>{`
-        .app-shell { max-width: 560px; margin: 0 auto; }
-        @media (min-width: 900px) {
-          .app-shell { max-width: 100%; display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
-          .app-sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; border-right: 1px solid #2a2a2a; background: linear-gradient(135deg,#111 0%,#1a1a0a 100%); }
-          .app-main { overflow-y: auto; }
-          .tab-bar { flex-direction: column; border-bottom: none; border-right: none; padding: 8px 0; }
-          .tab-bar button { text-align: left; padding: 10px 16px; border-bottom: none !important; border-left: 2px solid transparent; width: 100%; justify-content: flex-start; }
-          .tab-bar button.active { border-left-color: #e8ff4a; border-bottom: none !important; }
-          .content-area { padding: 24px 32px 40px; max-width: 720px; }
-          .xp-bar-wrap { display: none; }
-          .sidebar-xp { display: block !important; }
-          .hide-on-desktop { display: none !important; }
-        }
-        @media (max-width: 899px) {
-          .app-shell { max-width: 560px; margin: 0 auto; }
-          .app-sidebar { display: none; }
-          .sidebar-xp { display: none; }
-          .app-main { display: block; }
-        }
-        .sidebar-xp { display: none; }
-        ::-webkit-scrollbar { width: 0; height: 0; }
-        * { scrollbar-width: none; }
-      `}</style>
       {/* Header */}
       <div style={{ background:"linear-gradient(135deg,#111 0%,#1a1a0a 100%)", padding:"20px 20px 12px" }}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
@@ -4717,7 +4725,7 @@ export default function App() {
           background:"#1a1a1a",padding:"0 4px"}}>
           {TABS.map(t=>(
             <button key={t.id} onClick={()=>setTab(t.id)}
-              className={tab===t.id?"active":""}
+              className={tab===t.id?"active-tab":""}
               style={{padding:"11px 12px",background:"none",border:"none",cursor:"pointer",
                 color:tab===t.id?"#e8ff4a":"#888",
                 borderBottom:tab===t.id?"2px solid #e8ff4a":"2px solid transparent",
