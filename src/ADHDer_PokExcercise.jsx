@@ -4456,72 +4456,23 @@ function LevelUpModal({ levelUpModal, setLevelUpModal, setPokedex }) {
 export default function App() {
   const [tab, setTab] = useState("data");
 
-  // Responsive layout — measure and position dynamically
+  // Responsive CSS
   useEffect(() => {
-    // Static CSS first
     const s = document.createElement("style");
     s.textContent = [
       "::-webkit-scrollbar{width:0;height:0;}",
-      "*{scrollbar-width:none;}"
-    ].join("");
+      "*{scrollbar-width:none;}",
+      "@media(min-width:900px){",
+      "  #app-outer{max-width:100%!important;padding-left:300px;}",
+      "  #app-header{position:fixed;top:0;left:0;width:300px;z-index:100;border-right:1px solid #2a2a2a;box-sizing:border-box;}",
+      "  #app-xpbar{position:fixed;top:96px;left:0;width:300px;z-index:100;border-right:1px solid #2a2a2a;border-bottom:none!important;box-sizing:border-box;background:linear-gradient(135deg,#111 0%,#1a1a0a 100%);}",
+      "  #app-tabbar{position:fixed;top:148px;left:0;width:300px;height:calc(100vh - 148px);z-index:100;flex-direction:column!important;overflow-x:hidden!important;overflow-y:auto;border-bottom:none!important;border-right:1px solid #2a2a2a;padding:8px 0!important;box-sizing:border-box;background:#111;}",
+      "  #app-tabbar button{text-align:left!important;display:block!important;width:100%!important;border-bottom:none!important;border-left:3px solid transparent!important;padding:12px 20px!important;font-size:14px!important;white-space:nowrap!important;}",
+      "  #app-content{padding:24px 40px 40px!important;}",
+      "}"
+    ].join("
+");
     document.head.appendChild(s);
-
-    if(window.innerWidth < 900) return;
-
-    const applyDesktop = () => {
-      const header  = document.getElementById("app-header");
-      const xpbar   = document.getElementById("app-xpbar");
-      const tabbar  = document.getElementById("app-tabbar");
-      const content = document.getElementById("app-content");
-      const outer   = document.getElementById("app-outer");
-      if(!header || !xpbar || !tabbar || !content || !outer) return;
-
-      const W = 220;
-      const hH = header.offsetHeight;
-      const xH = xpbar.offsetHeight;
-      const topTabs = hH + xH;
-
-      // Sidebar styles
-      const sideStyle = `
-        position:fixed;top:0;left:0;width:${W}px;z-index:100;
-        border-right:1px solid #2a2a2a;box-sizing:border-box;
-        background:linear-gradient(135deg,#111 0%,#1a1a0a 100%);
-      `;
-      header.style.cssText += sideStyle;
-
-      xpbar.style.cssText += `
-        position:fixed;top:${hH}px;left:0;width:${W}px;z-index:100;
-        border-right:1px solid #2a2a2a;border-bottom:none;box-sizing:border-box;
-        background:linear-gradient(135deg,#111 0%,#1a1a0a 100%);
-      `;
-
-      tabbar.style.cssText += `
-        position:fixed;top:${topTabs}px;left:0;width:${W}px;
-        height:calc(100vh - ${topTabs}px);z-index:100;
-        flex-direction:column;overflow-x:hidden;overflow-y:auto;
-        border-bottom:none;border-right:1px solid #2a2a2a;
-        padding:8px 0;box-sizing:border-box;background:#111;
-      `;
-
-      // Make tab buttons vertical
-      tabbar.querySelectorAll("button").forEach(btn => {
-        btn.style.cssText += `
-          text-align:left;display:block;width:100%;
-          border-bottom:none;border-left:3px solid transparent;
-          padding:11px 16px;font-size:13px;white-space:nowrap;
-        `;
-      });
-
-      // Push content right
-      outer.style.paddingLeft = W + "px";
-      content.style.maxWidth = "900px";
-      content.style.padding = "24px 40px 40px";
-    };
-
-    // Run after render
-    setTimeout(applyDesktop, 100);
-    window.addEventListener("resize", applyDesktop);
-    return () => window.removeEventListener("resize", applyDesktop);
   }, []);
 
   const [appName, setAppName]         = usePersistedState("vs_appName", "PokExcercise - ADHD Edition 🏔️");
