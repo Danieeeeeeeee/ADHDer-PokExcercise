@@ -1191,8 +1191,6 @@ function CoreBlock({ wk }) {
           </div>
         )}
       </div>
-      </div>
-      </div>
     </div>
   );
 }
@@ -4458,38 +4456,13 @@ function LevelUpModal({ levelUpModal, setLevelUpModal, setPokedex }) {
 export default function App() {
   const [tab, setTab] = useState("data");
 
-  // Inject responsive CSS
+  // Hide scrollbars globally
   useEffect(() => {
-    const id = "app-responsive-css";
-    if(document.getElementById(id)) return;
-    const el = document.createElement("style");
-    el.id = id;
-    el.textContent = [
-      ".app-shell { max-width: 560px; margin: 0 auto; }",
-      "::-webkit-scrollbar { width: 0; height: 0; }",
-      "* { scrollbar-width: none; }",
-      ".sidebar-xp { display: none; }",
-      "@media (min-width: 900px) {",
-      "  .app-shell { max-width: 100%; display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }",
-      "  .app-sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; border-right: 1px solid #2a2a2a; background: linear-gradient(135deg,#111 0%,#1a1a0a 100%); }",
-      "  .app-main { overflow-y: auto; }",
-      "  .tab-bar { flex-direction: column !important; overflow-x: visible !important; border-bottom: none !important; padding: 8px 0 !important; }",
-      "  .tab-bar button { text-align: left !important; padding: 10px 16px !important; border-bottom: none !important; border-left: 2px solid transparent; width: 100% !important; }",
-      "  .tab-bar button.active-tab { border-left: 2px solid #e8ff4a !important; border-bottom: none !important; }",
-      "  .content-area { padding: 24px 32px 40px; max-width: 720px; }",
-      "  .xp-bar-wrap { display: none !important; }",
-      "  .sidebar-xp { display: block !important; }",
-      "  .hide-on-desktop { display: none !important; }",
-      "  .app-sidebar-inner { display: block !important; }",
-      "}",
-      "@media (max-width: 899px) {",
-      "  .app-sidebar { display: none !important; }",
-      "  .app-main { display: block !important; }",
-      "}",
-    ].join("
-");
-    document.head.appendChild(el);
+    const s = document.createElement("style");
+    s.textContent = "::-webkit-scrollbar{width:0;height:0;}*{scrollbar-width:none;}";
+    document.head.appendChild(s);
   }, []);
+
   const [appName, setAppName]         = usePersistedState("vs_appName", "PokExcercise - ADHD Edition 🏔️");
   const [xp,      setXp]              = usePersistedState("vs_xp", 0);
   const [levelUpModal, setLevelUpModal] = useState(null); // { level }
@@ -4673,8 +4646,7 @@ export default function App() {
   ];
 
   return (
-    <div style={{ background:"#0f0f0f", minHeight:"100vh", fontFamily:"'Segoe UI',Arial,sans-serif", color:"#f0f0f0" }}>
-      <div className="app-shell">
+    <div style={{ background:"#0f0f0f", minHeight:"100vh", fontFamily:"'Segoe UI',Arial,sans-serif", color:"#f0f0f0", maxWidth:560, margin:"0 auto" }}>
       {/* Header */}
       <div style={{ background:"linear-gradient(135deg,#111 0%,#1a1a0a 100%)", padding:"20px 20px 12px" }}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
@@ -4688,56 +4660,9 @@ export default function App() {
           <Tag color="#c084fc">TDAH-friendly</Tag>
         </div>
       </div>
-      {/* Mini XP bar — mobile only */}
-      <div className="xp-bar-wrap">
-        <MiniXPBar xp={xp} appName={appName}/>
-      </div>
-      {/* Sidebar — desktop only */}
-      <div className="app-sidebar">
-        <div style={{padding:"20px 16px 12px"}}>
-          <div style={{color:"#e8ff4a",fontWeight:900,fontSize:20,letterSpacing:-1}}>{appName}</div>
-          <div style={{color:"#888",fontSize:11,marginTop:2}}>ADHD Friendly · Pokémon Themed</div>
-          {/* XP in sidebar */}
-          <div className="sidebar-xp" style={{marginTop:12}}>
-            {(() => {
-              const { level, progress, toNext } = calcLevel(xp);
-              const pct = toNext > 0 ? (progress/toNext)*100 : 0;
-              return (
-                <div style={{display:"flex",alignItems:"center",gap:8}}>
-                  <div style={{background:"linear-gradient(135deg,#c084fc,#818cf8)",borderRadius:6,
-                    padding:"3px 8px",fontSize:11,fontWeight:900,color:"#000",whiteSpace:"nowrap"}}>
-                    LVL {level}
-                  </div>
-                  <div style={{flex:1}}>
-                    <div style={{background:"#222",borderRadius:20,height:6,overflow:"hidden"}}>
-                      <div style={{background:"linear-gradient(90deg,#c084fc,#818cf8)",height:"100%",
-                        width:`${pct}%`,borderRadius:20,transition:"width .5s"}}/>
-                    </div>
-                  </div>
-                  <span style={{color:"#555",fontSize:9}}>{progress}/{toNext}</span>
-                </div>
-              );
-            })()}
-          </div>
-        </div>
-        {/* Vertical tabs */}
-        <div className="tab-bar" style={{display:"flex",borderBottom:"1px solid #2a2a2a",
-          background:"#1a1a1a",padding:"0 4px"}}>
-          {TABS.map(t=>(
-            <button key={t.id} onClick={()=>setTab(t.id)}
-              className={tab===t.id?"active-tab":""}
-              style={{padding:"11px 12px",background:"none",border:"none",cursor:"pointer",
-                color:tab===t.id?"#e8ff4a":"#888",
-                borderBottom:tab===t.id?"2px solid #e8ff4a":"2px solid transparent",
-                fontWeight:tab===t.id?700:400,fontSize:12,whiteSpace:"nowrap",display:"flex",
-                alignItems:"center",gap:8}}>
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </div>
-      {/* Main content area */}
-      <div className="app-main">
+      {/* Mini XP bar */}
+      <MiniXPBar xp={xp} appName={appName}/>
+
       {/* Sunday modal */}
       {showSundayModal && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"#000c",
@@ -4862,7 +4787,7 @@ export default function App() {
         </div>
       )}
       {/* Tabs */}
-      <div className="tab-bar hide-on-desktop" style={{ display:"flex", overflowX:"auto", borderBottom:"1px solid #2a2a2a", background:"#1a1a1a", padding:"0 4px" }}>
+      <div  style={{ display:"flex", overflowX:"auto", borderBottom:"1px solid #2a2a2a", background:"#1a1a1a", padding:"0 4px" }}>
         {TABS.map(t=>(
           <button key={t.id} onClick={()=>setTab(t.id)}
             style={{ padding:"11px 12px", background:"none", border:"none", cursor:"pointer",
@@ -4874,7 +4799,7 @@ export default function App() {
         ))}
       </div>
       {/* Content */}
-      <div className="content-area" style={{ padding:"16px 16px 40px" }}>
+      <div style={{ padding:"16px 16px 40px" }}>
         {tab==="data"     && <DataTab appName={appName} setAppName={setAppName} logs={logs} xp={xp} setXp={setXpWithLevelUp} weightHistory={weightHistory} setWeightHistory={setWeightHistory} goalWeight={goalWeight} setGoalWeight={setGoalWeight} pokedex={pokedex}/>}
         {tab==="tracker"      && <HabitTrackerTab logs={logs} setLogs={setLogs} onXP={setXpWithLevelUp} xpAwarded={xpAwarded} setXpAwarded={setXpAwarded}/>}
         {tab==="timer"        && <TimerTab/>}
