@@ -4463,36 +4463,47 @@ export default function App() {
       ::-webkit-scrollbar { width: 0; height: 0; }
       * { scrollbar-width: none; }
 
-      /* Desktop layout */
+      /* Desktop layout — fixed sidebar approach */
       @media (min-width: 900px) {
         #app-outer {
           max-width: 100% !important;
-          display: grid;
-          grid-template-columns: 260px 1fr;
-          grid-template-rows: auto auto 1fr;
-          min-height: 100vh;
+          padding-left: 260px;
         }
         #app-header {
-          grid-column: 1;
-          grid-row: 1;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 260px;
+          z-index: 100;
           border-right: 1px solid #2a2a2a;
+          box-sizing: border-box;
         }
         #app-xpbar {
-          grid-column: 1;
-          grid-row: 2;
+          position: fixed;
+          top: 88px;
+          left: 0;
+          width: 260px;
+          z-index: 100;
           border-right: 1px solid #2a2a2a;
           border-bottom: none !important;
+          box-sizing: border-box;
         }
         #app-tabbar {
-          grid-column: 1;
-          grid-row: 3;
+          position: fixed;
+          top: 138px;
+          left: 0;
+          width: 260px;
+          height: calc(100vh - 138px);
+          overflow-y: auto;
+          z-index: 100;
           flex-direction: column !important;
-          overflow-x: visible !important;
+          overflow-x: hidden !important;
           border-bottom: none !important;
           border-right: 1px solid #2a2a2a;
-          height: 100%;
           align-items: stretch;
           padding: 8px 0 !important;
+          box-sizing: border-box;
+          background: #1a1a1a;
         }
         #app-tabbar button {
           text-align: left !important;
@@ -4501,19 +4512,11 @@ export default function App() {
           border-left: 3px solid transparent !important;
           padding: 12px 16px !important;
           font-size: 13px !important;
-          white-space: normal !important;
-        }
-        #app-tabbar button[style*="color:#e8ff4a"],
-        #app-tabbar button[style*="color: #e8ff4a"] {
-          border-left: 3px solid #e8ff4a !important;
-          background: #e8ff4a11 !important;
+          white-space: nowrap !important;
+          width: 100% !important;
         }
         #app-content {
-          grid-column: 2;
-          grid-row: 1 / 4;
           padding: 24px 40px 40px !important;
-          max-width: 800px;
-          overflow-y: auto;
           min-height: 100vh;
         }
       }
