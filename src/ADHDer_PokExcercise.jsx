@@ -4470,8 +4470,7 @@ export default function App() {
       "  #app-tabbar button{text-align:left!important;display:block!important;width:100%!important;border-bottom:none!important;border-left:3px solid transparent!important;padding:12px 20px!important;font-size:14px!important;white-space:nowrap!important;}",
       "  #app-content{padding:24px 40px 40px!important;}",
       "}"
-    ].join("
-");
+    ].join("");
     document.head.appendChild(s);
   }, []);
 
