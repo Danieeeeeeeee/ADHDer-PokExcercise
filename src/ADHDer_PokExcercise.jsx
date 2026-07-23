@@ -1149,8 +1149,6 @@ function AlternateCard({ alt, color }) {
           </div>
         );
       })()}
-      </div>
-      </div>
     </div>
   );
 }
@@ -1192,6 +1190,8 @@ function CoreBlock({ wk }) {
             <VideoLink url={ex.video} label="Ver video de referencia ▶"/>
           </div>
         )}
+      </div>
+      </div>
       </div>
     </div>
   );
