@@ -4467,33 +4467,43 @@ export default function App() {
       @media (min-width: 900px) {
         #app-outer {
           max-width: 100% !important;
-          padding-left: 260px;
+          padding-left: 220px;
         }
         #app-header {
           position: fixed;
           top: 0;
           left: 0;
-          width: 260px;
+          width: 220px;
           z-index: 100;
           border-right: 1px solid #2a2a2a;
           box-sizing: border-box;
+          background: linear-gradient(135deg,#111 0%,#1a1a0a 100%);
+        }
+        #app-header > div:first-child {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 4px !important;
+        }
+        #app-header > div:first-child > div:last-child {
+          font-size: 14px !important;
         }
         #app-xpbar {
           position: fixed;
-          top: 88px;
+          top: 100px;
           left: 0;
-          width: 260px;
+          width: 220px;
           z-index: 100;
           border-right: 1px solid #2a2a2a;
           border-bottom: none !important;
           box-sizing: border-box;
+          background: linear-gradient(135deg,#111 0%,#1a1a0a 100%);
         }
         #app-tabbar {
           position: fixed;
-          top: 138px;
+          top: 152px;
           left: 0;
-          width: 260px;
-          height: calc(100vh - 138px);
+          width: 220px;
+          height: calc(100vh - 152px);
           overflow-y: auto;
           z-index: 100;
           flex-direction: column !important;
@@ -4503,21 +4513,27 @@ export default function App() {
           align-items: stretch;
           padding: 8px 0 !important;
           box-sizing: border-box;
-          background: #1a1a1a;
+          background: #111;
         }
         #app-tabbar button {
           text-align: left !important;
           justify-content: flex-start !important;
-          border-bottom: none !important;
+          border-bottom: 0 !important;
           border-left: 3px solid transparent !important;
-          padding: 12px 16px !important;
+          padding: 11px 16px !important;
           font-size: 13px !important;
           white-space: nowrap !important;
           width: 100% !important;
+          display: block !important;
         }
         #app-content {
           padding: 24px 40px 40px !important;
           min-height: 100vh;
+          max-width: 900px;
+        }
+        /* Hide the badge tags in sidebar to save space */
+        #app-header .badge-row {
+          display: none !important;
         }
       }
     `;
