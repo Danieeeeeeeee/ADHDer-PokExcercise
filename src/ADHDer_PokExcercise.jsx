@@ -4185,7 +4185,7 @@ function MiniXPBar({ xp, appName }) {
   const { level, progress, toNext } = calcLevel(xp);
   const pct = toNext > 0 ? (progress/toNext)*100 : 0;
   return (
-    <div style={{ id:"app-xpbar", padding:"8px 20px 10px", background:"linear-gradient(135deg,#111 0%,#1a1a0a 100%)", borderBottom:"1px solid #2a2a2a" }}>
+    <div id="app-xpbar" style={{ padding:"8px 20px 10px", background:"linear-gradient(135deg,#111 0%,#1a1a0a 100%)", borderBottom:"1px solid #2a2a2a" }}>
       <div style={{ display:"flex", alignItems:"center", gap:10 }}>
         <div style={{ background:"linear-gradient(135deg,#c084fc,#818cf8)", borderRadius:8, padding:"3px 8px", fontSize:11, fontWeight:900, color:"#000", whiteSpace:"nowrap" }}>
           LVL {level}
@@ -4707,9 +4707,9 @@ export default function App() {
   ];
 
   return (
-    <div style={{ id:"app-outer", background:"#0f0f0f", minHeight:"100vh", fontFamily:"'Segoe UI',Arial,sans-serif", color:"#f0f0f0", maxWidth:560, margin:"0 auto" }}>
+    <div id="app-outer" style={{ background:"#0f0f0f", minHeight:"100vh", fontFamily:"'Segoe UI',Arial,sans-serif", color:"#f0f0f0", maxWidth:560, margin:"0 auto" }}>
       {/* Header */}
-      <div style={{ id:"app-header", background:"linear-gradient(135deg,#111 0%,#1a1a0a 100%)", padding:"20px 20px 12px" }}>
+      <div id="app-header" style={{ background:"linear-gradient(135deg,#111 0%,#1a1a0a 100%)", padding:"20px 20px 12px" }}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
           <div style={{ color:"#e8ff4a", fontWeight:900, fontSize:24, letterSpacing:-1 }}>{appName}</div>
           <LiveClock/>
@@ -4848,7 +4848,7 @@ export default function App() {
         </div>
       )}
       {/* Tabs */}
-      <div  style={{ id:"app-tabbar", display:"flex", overflowX:"auto", borderBottom:"1px solid #2a2a2a", background:"#1a1a1a", padding:"0 4px" }}>
+      <div  id="app-tabbar" style={{ display:"flex", overflowX:"auto", borderBottom:"1px solid #2a2a2a", background:"#1a1a1a", padding:"0 4px" }}>
         {TABS.map(t=>(
           <button key={t.id} onClick={()=>setTab(t.id)}
             style={{ padding:"11px 12px", background:"none", border:"none", cursor:"pointer",
@@ -4860,7 +4860,7 @@ export default function App() {
         ))}
       </div>
       {/* Content */}
-      <div style={{ id:"app-content", padding:"16px 16px 40px" }}>
+      <div id="app-content" style={{ padding:"16px 16px 40px" }}>
         {tab==="data"     && <DataTab appName={appName} setAppName={setAppName} logs={logs} xp={xp} setXp={setXpWithLevelUp} weightHistory={weightHistory} setWeightHistory={setWeightHistory} goalWeight={goalWeight} setGoalWeight={setGoalWeight} pokedex={pokedex}/>}
         {tab==="tracker"      && <HabitTrackerTab logs={logs} setLogs={setLogs} onXP={setXpWithLevelUp} xpAwarded={xpAwarded} setXpAwarded={setXpAwarded}/>}
         {tab==="timer"        && <TimerTab/>}
